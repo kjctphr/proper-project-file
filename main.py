@@ -1,5 +1,6 @@
-from mymodules import *
 from student_data import *
+from attendance import *
+from mymodules import *
 
 def main():
     while 1:
@@ -48,21 +49,24 @@ def auth_admin():
 def student_session():
     print("")
     print("1. View attendance")
+    print("2. Change password")
 
 
 
 def admin_session():
     print("")
     print("1.CRUD Student data")
-    print("CRUD Student Attendance")
+    print("1.CRUD course")
+    print("2.CRUD Student Attendance")
     print("Generate Report")
     user_option = input(str("Option : "))
     if user_option == "1":
         student_data()
     elif user_option == "2":
+        course()
+    if user_option == "3":
         attendance()
-    if user_option == "1":
-        report()
+        pass
     else:
         print("No valid option was selected")
 

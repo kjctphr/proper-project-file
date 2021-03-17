@@ -1,32 +1,51 @@
 from mymodules import *
 import os
+import fileinput
 
-
-def student_data():
-    print("Enter [C] to create a student")
-    print("Enter [R] to show student list")
-    print("Enter [U] to change student login password")
+def course_data():
+    print("Enter [C] to create a course")
+    print("Enter [R] to show course list")
     print("Enter [D] to delete a student")
     print("Enter [Q] to quit")
     print("")
 
-    student_list = []
-    callTXTintoNestedList("student.txt", student_list)
+    course_list = []
+    callTXTintoNestedList("course.txt",course_list)
 
     user_option = input(str("Option : ")).upper()
     if user_option == "C":
-        name = input("Student name:").upper()
-        std_id = str(int(student_list[-1][1]) + 1)
-        pwd = "admin123"
-        data = ("\n%s|%s|%s|" % (name, std_id, pwd))
-        with open("student.txt", "r+") as f:
-            f.read().rstrip('\n')#to avoid blank line while adding new student
-            f.write(data)
+        session_list = []
+        course_name = input("New course name:").upper()
+        session_list.append(course_name)
+        while True:
+            try:
+                os.makedirs(course_name)
+            except FileExistsError:
+                print("Course file existed")
+                print("Please enter another course code")
+                course_name = input("\nNew course name:").upper()
+            else:
+                break
+        session_type = input("Session type(L/P/T/...):").upper()
+        session_length = str(float(input("Session length(if 1 hours and 30 minutes , enter 1.5:)")))
+        session_list.append(session_type)
+        session_list.append(session_length)
+        more = input("More session type?(if yes enter [Y]es ):").upper()
+        while more == "Y" or more == "YES":
+            session_type = input("Session type(L/P/T/...):").upper()
+            session_length = str(float(input("Session length(if 1 hours and 30 minutes , enter 1.5:)")))
+            more = input("More session type?(Y/N):").upper()
+            session_list.append(session_type)
+            session_list.append(session_length)
+        else:
+            pass
+        with open("course.txt","r+") as f:
+            session_data = "|".join(session_list)
+            f.read().rstrip('\n')  # to avoid blank line while adding new student
+            f.write("\n"+session_data)
         print("\nThank You!\n")
-        print("The student has been added to the system")
-        print(f"Name : {name}")
-        print(f"Student id  : {std_id}")
-        print(f"Default password : admin123")
+        print(f"The course {course_name} has been added to the system\n")
+
         input("Press Enter to continue")
 
 
@@ -86,4 +105,4 @@ def student_data():
         print("Invalid option.")
 
 
-student_data()
+course_data()

@@ -115,7 +115,7 @@ def delete_attn():
             break
 
 
-attendance()
+
 
 
 

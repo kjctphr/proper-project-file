@@ -1,8 +1,4 @@
-# import os
-#
-# file_location = os.path.join('Desktop','Desktop', 'proper project file', '*.py')
-# print(file_location)
-# import glob
-#
-# filenames = glob.glob(file_location)
-# print(filenames)
+import os
+
+for i in range(1,-1,2):
+    print(i)
