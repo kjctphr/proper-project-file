@@ -5,10 +5,10 @@ import os
 def attendance():
     print("")
     print("1.Create new attendance file ")
-    print("2.Update existing attendance file")
-    print("3.Delete attendance file")
-    user_option = input(str("Option : "))
-    if user_option == "1":
+    print("2.Read or Update existing attendance file")
+    print("4.Delete attendance file")
+    user_option = input(str("Option : ")).upper()
+    if user_option == "1" or "C":
         add_attn()
     elif user_option == "2":
         update_attn()
@@ -23,8 +23,17 @@ def add_attn():
         element[2] = ""
 
     course_name = input("Enter course:").upper()
-    session_type = input("Enter session type:").upper()
-    file_name = str(course_name + "_" + session_type)
+    course_exist = os.path.exists(os.path.join("attendance folder",course_name))
+    print("attendance folder/"+course_name)
+    while course_exist is not True:
+            print("Course not existed")
+            print("Please check")
+            print("Or create the course")
+            course_name = input("Enter course again:").upper()
+            course_exist = os.path.exists(os.path.join("attendance folder", course_name))
+    session_type = input("Enter course session (L1/P1):").upper()
+    session_type_ = session_type+".txt"
+    file_name = os.path.join("attendance folder",course_name,session_type_)
     while True:
         try:
             with open(file_name) as f:
@@ -34,9 +43,9 @@ def add_attn():
         else:
             print("Attendance file existed")
             print("Please key in another coursename")
-            course_name = input("Enter course:").upper()
-            session_type = input("Enter session type:").upper()
-            file_name = str(course_name + "_" + session_type)
+            session_type = input("Enter course session (L1/P1):").upper()
+            session_type_ = session_type + ".txt"
+            file_name = os.path.join("attendance folder", course_name, session_type_)
     session_start = input("Enter class start time:")
     session_end = input("Enter class end time:")
 
@@ -49,8 +58,8 @@ def add_attn():
             try:
                 if login_time == "P":
                     line[2] = "P"
-                elif login_time == "Q":
-                    line[2] = "Q"
+                elif login_time == "A":
+                    line[2] = "A"
                 elif login_time == "L":
                     line[2] = "L"
                 else:
@@ -67,17 +76,25 @@ def add_attn():
 
 def update_attn():
     course_name = input("Enter course:").upper()
-    session_type = input("Enter session type:").upper()
-    file_name = str(course_name + "_" + session_type)
+    course_exist = os.path.exists(course_name)
+    while course_exist is not True:
+            print("Course not existed")
+            print("Please check")
+            print("Or create the course")
+            course_name = input("Enter course again:").upper()
+            course_exist = os.path.exists(course_name)
+    session_type = input("Enter course session (L1/P1):").upper()
+    session_type_ = session_type+".txt"
+    file_name = os.path.join(course_name,session_type_)
     attn_list = []
     while True:
         try:
             callTXTintoNestedList(file_name,attn_list)
         except:
-            print("Course file does not exist")
-            course_name = input("Enter course:").upper()
-            session_type = input("Enter session type:").upper()
-            file_name = str(course_name + "_" + session_type)
+            print("Attendance file does not exist")
+            session_type = input("Enter course session (L1/P1):").upper()
+            session_type_ = session_type + ".txt"
+            file_name = os.path.join(course_name, session_type_)
         else:
             break
 
@@ -116,6 +133,6 @@ def delete_attn():
 
 
 
-
+attendance()
 
 
