@@ -1,6 +1,9 @@
 from student_data import *
 from attendance import *
 from mymodules import *
+from student_entry import *
+from report import *
+from course_data import *
 
 def main():
     while 1:
@@ -50,37 +53,36 @@ def student_session():
     print("")
     print("1. View attendance")
     print("2. Change password")
-
+    user_option = input(str("Option : "))
+    if user_option == "1":
+        view_attendance(id_no)
+    elif user_option == "2":
+        change_password(id_no,pwd)
+    else:
+        print("No valid option was selected")
 
 
 def admin_session():
     print("")
     print("1.CRUD Student data")
-    print("1.CRUD course")
-    print("2.CRUD Student Attendance")
-    print("Generate Report")
+    print("2.CRUD course")
+    print("3.CRUD Student Attendance")
+    print("4.Generate Bar List")
+    print("5.Generate 100% attendance report")
     user_option = input(str("Option : "))
     if user_option == "1":
         student_data()
     elif user_option == "2":
-        course()
-    if user_option == "3":
+        course_data()
+    elif user_option == "3":
         attendance()
-        pass
+    elif user_option == "4":
+        barlist()
+    elif user_option == "5":
+        full_attendance()
     else:
         print("No valid option was selected")
 
 
 main()
 
-
-# 1. admin_session()
-# -CRUD student data
-# -CRUD Attendance
-# -Report
-# Bar list
-# -....
-# 2.student_session()
-# -View attendance
-# 3.flowchart & report
-# total  = 5

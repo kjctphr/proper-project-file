@@ -133,6 +133,5 @@ def delete_attn():
 
 
 
-attendance()
 
 

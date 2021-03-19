@@ -3,12 +3,13 @@ import os
 
 
 def student_data():
-    print("Enter [C] to create a student")
-    print("Enter [R] to show student list")
-    print("Enter [U] to change student login password")
-    print("Enter [D] to delete a student")
-    print("Enter [Q] to quit")
-    print("")
+    print("""
+Enter [C] to create a student
+Enter [R] to show student list
+Enter [U] to change student login password
+Enter [D] to delete a student
+Enter [Q] to quit
+""")
 
     student_list = []
     callTXTintoNestedList("student.txt", student_list)
@@ -16,6 +17,9 @@ def student_data():
     user_option = input(str("Option : ")).upper()
     if user_option == "C":
         name = input("Student name:").upper()
+        while find_element(name,student_list) != None:
+            print("Student already existed!")
+            name = input("Please submit another student:").upper()
         std_id = str(int(student_list[-1][1]) + 1)
         pwd = "admin123"
         data = ("\n%s|%s|%s|" % (name, std_id, pwd))
@@ -70,13 +74,15 @@ def student_data():
         print("")
         name = input("Please Enter the student name that you want to delete...").upper()
         std_valid = find_element(name, student_list)
-        while std_valid is None:
-            print("Student not found")
-            name = input("Please enter again!:")
-            std_valid = find_element(name, student_list)
-        print(f"\nStudent {name} is found")
-        delete_a_line("student.txt", name)
-        print(f"Student {name} has been deleted from system.")
+        while name != "Q":
+            while std_valid is None:
+                print("Student not found")
+                name = input("Please enter again!:")
+                std_valid = find_element(name, student_list)
+            print(f"\nStudent {name} is found")
+            delete_a_line("student.txt", name)
+            print(f"Student {name} has been deleted from system.")
+
         input("\nPress Enter to continue")
 
     elif user_option == "Q":
@@ -84,6 +90,5 @@ def student_data():
 
     else:
         print("Invalid option.")
-
 
 student_data()

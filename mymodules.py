@@ -1,4 +1,6 @@
 from datetime import datetime
+import os
+import glob
 
 
 def callTXTintoNestedList(file,list):
@@ -52,4 +54,9 @@ def attendance_status(session_start,session_end , login_time):
         attendance = "P"
     return attendance
 
-
+def callATTENDANCEtoNestedList(course,course_list):
+    files = glob.glob(os.path.join("attendance folder", course, "*.txt"))
+    for file in files:
+        callTXTintoNestedList(file, course_list)
+    course_list.sort()
+    return course_list
